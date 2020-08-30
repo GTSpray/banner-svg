@@ -1,4 +1,4 @@
-import styles from "./styles.txt";
+import svgStyle from "./svg/styles.xcss";
 
 import banner0 from "./svg/banner0.svg";
 import banner1 from "./svg/banner1.svg";
@@ -24,7 +24,6 @@ const addStyle = (element, styles) => {
     defs = document.createElement("defs");
     element.appendChild(defs);
   }
-
   const css = document.createElement("style");
   css.type = "text/css";
   if (css.styleSheet) {
@@ -53,17 +52,11 @@ const draw = (svg) => {
   img.src = url;
 };
 
-const refresh = (value) => {
+const refresh = (value: string) => {
   const name = value.trim();
-  const middleName = Math.floor(name.length / 2);
   for (const element of nameContainers) {
     const max = parseInt(element.getAttribute("data-max"), 10);
-    const middle = Math.ceil(max / 2);
-    const padding =
-      middle > middleName
-        ? Array.from({ length: middle - middleName }, () => "").join(" ")
-        : "";
-    element.textContent = ` ${padding}${name}`;
+    element.textContent = `${name.substring(0, max)}`;
   }
 };
 
@@ -84,5 +77,5 @@ for (const svg of svgs) {
   svg.onclick = function () {
     draw(this);
   };
-  addStyle(svg, styles);
+  addStyle(svg, svgStyle);
 }
